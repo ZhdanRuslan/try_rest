@@ -5,5 +5,5 @@ from . import serializers
 
 
 class UserListView(generics.ListCreateAPIView):
-    queryset = models.CustUser.objects.all()
+    queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer

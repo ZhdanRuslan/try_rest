@@ -39,11 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'shop',
     'users',
     'api',
 ]
 
-AUTH_USER_MODEL = 'users.CustUser'
+AUTH_USER_MODEL = 'users.User'
 
 
 MIDDLEWARE = [
