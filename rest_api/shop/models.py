@@ -12,10 +12,8 @@ class Category(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         items = self.item_set.all().count()
-        if items == 0:
-            pass
-        else:
-            self.amount_items = items + 1
+
+        self.amount_items = items + 1
         cat = None
         try:
             cat = Category.objects.get(name=self.child.name)
