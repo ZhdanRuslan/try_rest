@@ -1,29 +1,21 @@
 from django.db import models
-from django.db.models import Count
+from mptt.models import MPTTModel, TreeForeignKey
 
 
-class Category(models.Model):
+class Category(MPTTModel):
     name = models.CharField(blank=True, max_length=255)
     description = models.TextField(blank=True, max_length=255)
-    child = models.ForeignKey('self', on_delete=models.PROTECT, default=0, null=True, blank=True,
-                              related_name='nested_category')
+    child = TreeForeignKey('self', on_delete=models.PROTECT, default=0, null=True, blank=True,
+                           related_name='nested_category')
     amount_items = models.IntegerField(blank=True, default=0)
     amount_inner_categories = models.IntegerField(blank=True, default=0)
 
+    class MPTTMeta:
+        parent_attr = 'child'
+
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         items = self.item_set.all().count()
-
         self.amount_items = items
-        cat = None
-        try:
-            cat = Category.objects.get(name=self.child.name)
-        except Exception as exc:
-            pass
-
-        child_amount = Category.objects.aggregate(num_cat=Count('child'))
-        if cat is not None:
-            cat.amount_inner_categories = child_amount['num_cat'] + 1
-            cat.save()
         super().save(force_insert, force_update, using, update_fields)
 
     def __str__(self):

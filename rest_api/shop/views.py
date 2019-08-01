@@ -23,9 +23,15 @@ class ReadOnly(BasePermission):
 
 class CategoryListView(generics.ListCreateAPIView):
     permission_classes = [ReadOnly | IsAuthenticated]
-    queryset = models.Category.objects.all()
     serializer_class = serializers.CategorySerializer
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+
+    def get_queryset(self):
+        queryset = models.Category.objects.all()
+        for i in queryset:
+            i.amount_inner_categories = len(i.get_ancestors())
+            i.save()
+        return queryset
 
 
 class ItemListView(generics.ListCreateAPIView):
