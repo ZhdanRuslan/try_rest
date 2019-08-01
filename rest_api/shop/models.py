@@ -37,7 +37,7 @@ class Item(models.Model):
     price = models.FloatField()
     description = models.TextField(blank=True, max_length=255)
     photo = models.ImageField(blank=True, null=True)
-    amount_views = models.IntegerField(blank=True, default=None, null=True)
+    amount_views = models.PositiveIntegerField(default=0)
     published = models.DateTimeField(auto_now_add=True, db_index=True)
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):

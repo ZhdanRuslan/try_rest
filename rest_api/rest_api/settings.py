@@ -72,10 +72,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'rest_api.urls'
 
+SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(SETTINGS_PATH, 'rest_api', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

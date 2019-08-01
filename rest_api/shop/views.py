@@ -1,10 +1,19 @@
 import django_filters
+from django.shortcuts import redirect, render
+from django.views import View
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, BasePermission, SAFE_METHODS
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import OrderingFilter
+from django.db.models import F
+
 from . import models
 from . import serializers
+
+
+class Index(View):
+    def get(self, request):
+        return render(request, 'shop/index.html')
 
 
 class ReadOnly(BasePermission):
@@ -29,6 +38,12 @@ class ItemListView(generics.ListCreateAPIView):
 
 class ItemDetailView(generics.RetrieveAPIView):
     permission_classes = [ReadOnly | IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        pk = (request.path_info).split('/')[-1]
+        models.Item.objects.filter(pk=pk).update(amount_views=F('amount_views') + 1)
+        return super().get(request, *args, **kwargs)
+
     queryset = models.Item.objects.all()
     serializer_class = serializers.ItemSerializer
 
