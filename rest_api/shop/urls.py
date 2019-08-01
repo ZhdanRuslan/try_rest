@@ -1,8 +1,12 @@
-from django.urls import path
+from django.conf.urls import url
 
 from . import views
 
 urlpatterns = [
-    path('categories/', views.CateListView.as_view()),
-    path('items/', views.ItemListView.as_view()),
+    url(r'^categories/', views.CategoryListView.as_view()),
+    url(r'^items/(?P<pk>\d+)/delete$', views.ItemDestroyView.as_view()),
+    url(r'^items/(?P<pk>\d+)/update$', views.ItemUpdateView.as_view()),
+    url(r'^items/(?P<pk>\d+)$', views.ItemDetailView.as_view()),
+    url(r'^items', views.ItemListView.as_view()),
+
 ]

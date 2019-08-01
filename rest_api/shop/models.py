@@ -5,15 +5,15 @@ from django.db.models import Count
 class Category(models.Model):
     name = models.CharField(blank=True, max_length=255)
     description = models.TextField(blank=True, max_length=255)
-    child = models.ForeignKey('self', on_delete=models.PROTECT, default=None, null=True, blank=True,
+    child = models.ForeignKey('self', on_delete=models.PROTECT, default=0, null=True, blank=True,
                               related_name='nested_category')
-    amount_items = models.IntegerField(blank=True, default=0, null=True)
-    amount_inner_categories = models.IntegerField(blank=True, default=0, null=True)
+    amount_items = models.IntegerField(blank=True, default=0)
+    amount_inner_categories = models.IntegerField(blank=True, default=0)
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         items = self.item_set.all().count()
 
-        self.amount_items = items + 1
+        self.amount_items = items
         cat = None
         try:
             cat = Category.objects.get(name=self.child.name)
