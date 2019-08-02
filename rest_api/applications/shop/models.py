@@ -1,6 +1,7 @@
 from django.db import models
 
 from mptt.models import MPTTModel, TreeForeignKey
+from ..users.models import User
 
 
 class Category(MPTTModel):
@@ -10,7 +11,7 @@ class Category(MPTTModel):
     """
     name = models.CharField(blank=True, max_length=255)
     description = models.TextField(blank=True, max_length=255)
-    parent = TreeForeignKey('self', on_delete=models.PROTECT, default=0, null=True, blank=True,
+    parent = TreeForeignKey('self', on_delete=models.PROTECT, default=None, null=True, blank=True,
                             related_name='nested_category')
     amount_items = models.IntegerField(blank=True, default=0)
     amount_inner_categories = models.IntegerField(blank=True, default=0)
@@ -27,7 +28,7 @@ class Item(models.Model):
         Item model
     """
     name = models.CharField(blank=True, max_length=255)
-    owner = models.CharField(blank=True, max_length=255)
+    owner = models.ForeignKey(User, on_delete=models.PROTECT)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     price = models.FloatField()
     description = models.TextField(blank=True, max_length=255)
@@ -42,3 +43,12 @@ class Item(models.Model):
             cat.save()
 
         super().save(force_insert, force_update, using, update_fields)
+
+    def delete(self, using=None, keep_parents=False):
+        if self.category is not None:
+            cat = Category.objects.get(pk=self.category.id)
+            cat.amount_items -= 1
+            cat.save()
+        return super().delete(using, keep_parents)
+
+

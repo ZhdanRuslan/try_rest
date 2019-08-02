@@ -38,9 +38,8 @@ CUSTOM_APPS = [
     'rest_auth.registration',
     'rest_framework',
     'django_filters',
-    'shop',
-    'users',
-    'api',
+    'applications.shop',
+    'applications.users',
 ]
 
 INSTALLED_APPS = [
@@ -140,3 +139,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

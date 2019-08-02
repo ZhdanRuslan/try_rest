@@ -21,7 +21,7 @@ class ItemListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Item
-        fields = ('id', 'name', 'description', 'category', 'price', 'amount_views')
+        fields = ('id', 'name', 'description', 'category', 'price', 'amount_views', 'owner', 'photo')
 
 
 class ItemSerializer(serializers.ModelSerializer):

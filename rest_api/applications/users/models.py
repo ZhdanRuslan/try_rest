@@ -9,4 +9,4 @@ class User(AbstractUser):
     is_active = models.BooleanField(default=True, verbose_name='active account')
 
     def __str__(self):
-        return self.email
+        return self.username

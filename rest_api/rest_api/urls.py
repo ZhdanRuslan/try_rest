@@ -16,6 +16,11 @@ Including another URLconf
 from django.urls import include, path
 
 urlpatterns = [
-    path('', include('shop.urls')),
-    path('api/v1/', include('api.urls')),
+    path('', include('applications.shop.urls')),
+    path('api/v1/users/', include('applications.users.urls')),
+    path('api/v1/shop/', include('applications.shop.urls')),
+    path('api/v1/rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('api/v1/rest-auth/logout/', include('rest_auth.urls')),
+    path('api/v1/rest-auth/user/', include('rest_auth.urls')),
+    path('api/v1/rest-auth/', include('rest_auth.urls')),
 ]
