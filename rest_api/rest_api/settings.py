@@ -24,7 +24,7 @@ SECRET_KEY = '20f4h7$!qfp3x98veq+&$)wkd1*2az_4_dm8e5o2qv%b9zn^rg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 SITE_ID = 1
 
