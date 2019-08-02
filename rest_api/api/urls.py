@@ -1,5 +1,4 @@
 from django.urls import include, path
-from rest_auth.registration.views import VerifyEmailView, RegisterView
 
 urlpatterns = [
     # all users

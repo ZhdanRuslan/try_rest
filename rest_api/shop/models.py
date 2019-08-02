@@ -4,6 +4,10 @@ from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Category(MPTTModel):
+    """
+        Category model with dependency django-mptt for calculate
+        nested categories
+    """
     name = models.CharField(blank=True, max_length=255)
     description = models.TextField(blank=True, max_length=255)
     parent = TreeForeignKey('self', on_delete=models.PROTECT, default=0, null=True, blank=True,
@@ -19,6 +23,9 @@ class Category(MPTTModel):
 
 
 class Item(models.Model):
+    """
+        Item model
+    """
     name = models.CharField(blank=True, max_length=255)
     owner = models.CharField(blank=True, max_length=255)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)

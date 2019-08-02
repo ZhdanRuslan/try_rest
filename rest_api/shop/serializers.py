@@ -3,12 +3,18 @@ from . import models
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    """
+        Serializer for category
+    """
     class Meta:
         model = models.Category
-        fields = ('id', 'name', 'description', 'amount_items', 'parent', 'amount_inner_categories')
+        fields = ('parent', 'name', 'amount_items', 'amount_inner_categories')
 
 
 class ItemListSerializer(serializers.ModelSerializer):
+    """
+        Serializer for list of items
+    """
 
     def create(self, validated_data):
         return super().create(validated_data)
@@ -19,7 +25,9 @@ class ItemListSerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
-
+    """
+        Serializer for one item
+    """
     class Meta:
         model = models.Item
         fields = '__all__'
