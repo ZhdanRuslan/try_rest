@@ -13,11 +13,6 @@ class Category(MPTTModel):
     class MPTTMeta:
         parent_attr = 'child'
 
-    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        items = self.item_set.all().count()
-        self.amount_items = items
-        super().save(force_insert, force_update, using, update_fields)
-
     def __str__(self):
         return f'name: {self.name}'
 
@@ -33,5 +28,9 @@ class Item(models.Model):
     published = models.DateTimeField(auto_now_add=True, db_index=True)
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        Category.objects.get(name=self.category.name).save()
+        if self.category is not None:
+            cat = Category.objects.get(pk=self.category.id)
+            cat.amount_items += 1
+            cat.save()
+
         super().save(force_insert, force_update, using, update_fields)
