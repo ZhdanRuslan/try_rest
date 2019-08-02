@@ -1,17 +1,18 @@
 from django.db import models
+
 from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Category(MPTTModel):
     name = models.CharField(blank=True, max_length=255)
     description = models.TextField(blank=True, max_length=255)
-    child = TreeForeignKey('self', on_delete=models.PROTECT, default=0, null=True, blank=True,
-                           related_name='nested_category')
+    parent = TreeForeignKey('self', on_delete=models.PROTECT, default=0, null=True, blank=True,
+                            related_name='nested_category')
     amount_items = models.IntegerField(blank=True, default=0)
     amount_inner_categories = models.IntegerField(blank=True, default=0)
 
     class MPTTMeta:
-        parent_attr = 'child'
+        parent_attr = 'parent'
 
     def __str__(self):
         return f'name: {self.name}'

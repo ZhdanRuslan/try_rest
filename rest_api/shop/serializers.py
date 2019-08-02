@@ -5,7 +5,7 @@ from . import models
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Category
-        fields = ('id', 'name', 'description', 'amount_items', 'child', 'amount_inner_categories')
+        fields = ('id', 'name', 'description', 'amount_items', 'parent', 'amount_inner_categories')
 
 
 class ItemListSerializer(serializers.ModelSerializer):
@@ -19,6 +19,7 @@ class ItemListSerializer(serializers.ModelSerializer):
 
 
 class ItemSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = models.Item
         fields = '__all__'

@@ -30,12 +30,13 @@ SITE_ID = 1
 
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 # Application definition
+
 CUSTOM_APPS = [
     'allauth',
     'allauth.account',
+    'rest_framework.authtoken',
     'rest_auth.registration',
     'rest_framework',
-    'rest_framework.authtoken',
     'django_filters',
     'shop',
     'users',
@@ -43,14 +44,16 @@ CUSTOM_APPS = [
 ]
 
 INSTALLED_APPS = [
-                     'django.contrib.admin',
-                     'django.contrib.auth',
-                     'django.contrib.contenttypes',
-                     'django.contrib.sessions',
-                     'django.contrib.messages',
-                     'django.contrib.staticfiles',
-                     'django.contrib.sites',
-                 ] + CUSTOM_APPS
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.sites',
+]
+
+INSTALLED_APPS += CUSTOM_APPS
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
